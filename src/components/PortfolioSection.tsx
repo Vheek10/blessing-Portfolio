@@ -115,8 +115,9 @@ export function PortfolioSection() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Gallery Grid with 3D Perspective */}
+        <div className="perspective-container">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
@@ -155,6 +156,7 @@ export function PortfolioSection() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
     </section>
