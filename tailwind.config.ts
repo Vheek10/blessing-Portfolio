@@ -23,11 +23,8 @@ export default {
     },
     extend: {
       fontFamily: {
-<<<<<<< HEAD
-        display: ['"Bebas Neue"', 'sans-serif'],
-=======
         display: ['"Bionix Fat"', 'sans-serif'],
->>>>>>> d76c475 (my updates)
+
         body: ['"Space Grotesk"', 'sans-serif'],
       },
       colors: {

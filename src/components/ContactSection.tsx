@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-<<<<<<< HEAD
-=======
 import { useToast } from "@/hooks/use-toast";
 import { send } from "@emailjs/browser";
->>>>>>> d76c475 (my updates)
+
 
 const socialLinks = [
 	{ icon: "mail", label: "Email", href: "mailto:abbablessing075@gmail.com" },
@@ -30,13 +28,6 @@ export function ContactSection() {
 		subject: "",
 		message: "",
 	});
-<<<<<<< HEAD
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		// Form submission logic
-		console.log("Form submitted:", formData);
-=======
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { toast } = useToast();
 
@@ -114,7 +105,7 @@ export function ContactSection() {
 		} finally {
 			setIsSubmitting(false);
 		}
->>>>>>> d76c475 (my updates)
+
 	};
 
 	const handleChange = (
@@ -159,11 +150,8 @@ export function ContactSection() {
 										Email
 									</div>
 									<a
-<<<<<<< HEAD
-										href="mailto:hello@alexrivera.com"
-=======
 										href="mailto:abbablessing075@gmail.com"
->>>>>>> d76c475 (my updates)
+
 										className="text-sm sm:text-base text-foreground hover:text-primary transition-colors break-all">
 										abbablessing075@gmail.com
 									</a>
@@ -224,10 +212,8 @@ export function ContactSection() {
 										className="form-input min-h-[44px] text-sm sm:text-base"
 										placeholder="Full Name"
 										required
-<<<<<<< HEAD
-=======
 										disabled={isSubmitting}
->>>>>>> d76c475 (my updates)
+
 									/>
 								</div>
 								<div>
@@ -245,10 +231,8 @@ export function ContactSection() {
 										className="form-input min-h-[44px] text-sm sm:text-base"
 										placeholder="name@example.com"
 										required
-<<<<<<< HEAD
-=======
 										disabled={isSubmitting}
->>>>>>> d76c475 (my updates)
+
 									/>
 								</div>
 							</div>
@@ -265,12 +249,9 @@ export function ContactSection() {
 									value={formData.subject}
 									onChange={handleChange}
 									className="form-input min-h-[44px] text-sm sm:text-base"
-<<<<<<< HEAD
-									required>
-=======
 									required
 									disabled={isSubmitting}>
->>>>>>> d76c475 (my updates)
+
 									<option value="">Select a service</option>
 									<option value="cinematography">Cinematography</option>
 									<option value="videography">Videography</option>
@@ -295,23 +276,14 @@ export function ContactSection() {
 									className="form-input resize-none text-sm sm:text-base min-h-[120px]"
 									placeholder="Tell me about your project..."
 									required
-<<<<<<< HEAD
-=======
 									disabled={isSubmitting}
->>>>>>> d76c475 (my updates)
+
 								/>
 							</div>
 
 							<Button
 								type="submit"
 								variant="hero"
-<<<<<<< HEAD
-								className="w-full min-h-[48px] text-sm sm:text-base touch-manipulation">
-								<span className="material-icons mr-2 text-lg sm:text-xl">
-									send
-								</span>
-								Send Message
-=======
 								className="w-full min-h-[48px] text-sm sm:text-base touch-manipulation"
 								disabled={isSubmitting}>
 								{isSubmitting ? (
@@ -329,7 +301,7 @@ export function ContactSection() {
 										Send Message
 									</>
 								)}
->>>>>>> d76c475 (my updates)
+
 							</Button>
 						</form>
 					</div>

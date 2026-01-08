@@ -3,10 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import { ScrollToTop } from "@/components/ScrollToTop";
->>>>>>> d76c475 (my updates)
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -17,10 +14,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-<<<<<<< HEAD
-=======
       <ScrollToTop />
->>>>>>> d76c475 (my updates)
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />

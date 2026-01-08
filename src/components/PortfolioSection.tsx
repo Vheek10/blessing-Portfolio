@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-<<<<<<< HEAD
-// Import portfolio images
-import portfolio1 from "@/assets/portfolio-1.jpg";
-import portfolio2 from "@/assets/portfolio-2.jpg";
-=======
 // Import portfolio images (using as placeholders for video thumbnails)
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
 import { VideoPlayer } from "@/components/VideoPlayer";
->>>>>>> d76c475 (my updates)
+
 import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 
@@ -22,69 +17,6 @@ const categories = [
   { id: "social", label: "Social Media", icon: "campaign" },
 ];
 
-<<<<<<< HEAD
-const projects = [
-  {
-    id: 1,
-    title: "Mountain Documentary",
-    category: "cinematography",
-    description: "Feature-length documentary on alpine exploration",
-    image: portfolio1,
-  },
-  {
-    id: 2,
-    title: "Brand Launch Campaign",
-    category: "videography",
-    description: "Product launch video for tech startup",
-    image: portfolio2,
-  },
-  {
-    id: 3,
-    title: "Music Video Edit",
-    category: "editing",
-    description: "Post-production for indie artist",
-    image: portfolio3,
-  },
-  {
-    id: 4,
-    title: "Social Media Series",
-    category: "social",
-    description: "30-day content campaign for fashion brand",
-    image: portfolio4,
-  },
-  {
-    id: 5,
-    title: "Wedding Cinematography",
-    category: "cinematography",
-    description: "Cinematic wedding film in Tuscany",
-    image: portfolio1,
-  },
-  {
-    id: 6,
-    title: "Corporate Documentary",
-    category: "videography",
-    description: "Company culture and brand story",
-    image: portfolio2,
-  },
-  {
-    id: 7,
-    title: "Short Film Post",
-    category: "editing",
-    description: "Color grading and VFX for indie film",
-    image: portfolio3,
-  },
-  {
-    id: 8,
-    title: "Instagram Reels",
-    category: "social",
-    description: "Viral content strategy for lifestyle brand",
-    image: portfolio4,
-  },
-];
-
-export function PortfolioSection() {
-  const [activeFilter, setActiveFilter] = useState("all");
-=======
 interface Project {
   id: number;
   title: string;
@@ -136,6 +68,7 @@ const projects: Project[] = [
     videoSrc: "/videos/FCS Singles Weekend {3 days to go}.mp4"
   },
   {
+    id: 2,
     id: 6,
     title: "FCS Invite Video",
     category: "videography",
@@ -181,7 +114,7 @@ import {
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedVideo, setSelectedVideo] = useState<Project | null>(null);
->>>>>>> d76c475 (my updates)
+
 
   useEffect(() => {
     const handlePortfolioFilter = (event: CustomEvent<{ filterId: string }>) => {
@@ -243,23 +176,6 @@ export function PortfolioSection() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-<<<<<<< HEAD
-              className="portfolio-item group aspect-[4/3] cursor-pointer opacity-0 animate-scale-in relative overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Background Image */}
-              <img
-                src={project.image}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
-
-              {/* Play Overlay */}
-              <div className="play-overlay group-hover:opacity-100 z-10 flex items-center justify-center">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_30px_hsl(var(--primary)/0.5)] transition-transform group-hover:scale-110">
-                  <span className="material-icons text-primary-foreground text-xl sm:text-2xl md:text-3xl">
-=======
               className="portfolio-item group aspect-[4/3] cursor-pointer opacity-0 animate-scale-in relative overflow-hidden bg-black rounded-xl border-2 border-white/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(var(--primary),0.2)] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300"
               style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => setSelectedVideo(project)}
@@ -291,25 +207,11 @@ export function PortfolioSection() {
               <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg">
                   <span className="material-icons text-white text-2xl sm:text-4xl ml-1 opacity-90">
->>>>>>> d76c475 (my updates)
                     play_arrow
                   </span>
                 </div>
               </div>
 
-<<<<<<< HEAD
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <h3 className="font-display text-lg sm:text-xl text-foreground mb-1">
-                  {project.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-foreground/70 line-clamp-2">{project.description}</p>
-              </div>
-
-              {/* Category Badge */}
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20">
-                <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80">
-=======
               {/* Dark Overlay - Hidden on hover to see video clearly */}
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
 
@@ -323,7 +225,6 @@ export function PortfolioSection() {
               {/* Category Badge */}
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 pointer-events-none">
                 <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80 shadow-sm">
->>>>>>> d76c475 (my updates)
                   {categories.find((c) => c.id === project.category)?.label}
                 </span>
               </div>
@@ -331,9 +232,6 @@ export function PortfolioSection() {
           ))}
           </div>
         </div>
-<<<<<<< HEAD
-      </div>
-=======
 
         {/* More Projects Button */}
         <div className="flex justify-center mt-12 sm:mt-16">
@@ -394,7 +292,6 @@ export function PortfolioSection() {
           )}
         </DialogContent>
       </Dialog>
->>>>>>> d76c475 (my updates)
     </section>
   );
 }
