@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import { Logo } from "@/components/Logo";
+
+>>>>>>> d76c475 (my updates)
 const footerLinks = {
   navigation: [
     { label: "About", href: "#about" },
@@ -6,10 +11,17 @@ const footerLinks = {
     { label: "Contact", href: "#contact" },
   ],
   social: [
+<<<<<<< HEAD
     { icon: "photo_camera", label: "Instagram", href: "#" },
     { icon: "smart_display", label: "Vimeo", href: "#" },
     { icon: "work", label: "LinkedIn", href: "#" },
     { icon: "mail", label: "Email", href: "mailto:hello@alexrivera.com" },
+=======
+    { icon: "mail", label: "Email", href: "mailto:abbablessing075@gmail.com" },
+    { icon: "photo_camera", label: "Instagram", href: "https://www.instagram.com/_bless.official" },
+    { icon: "smart_display", label: "Vimeo", href: "#" },
+    { icon: "work", label: "LinkedIn", href: "https://www.linkedin.com/in/blessing-abba-aa9633345/" },
+>>>>>>> d76c475 (my updates)
   ],
 };
 
@@ -21,12 +33,16 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           {/* Logo */}
+<<<<<<< HEAD
           <a
             href="#"
             className="font-display text-xl sm:text-2xl tracking-wider text-foreground hover:text-primary transition-colors touch-manipulation"
           >
             ALEX RIVERA
           </a>
+=======
+          <Logo variant="footer" />
+>>>>>>> d76c475 (my updates)
 
           {/* Navigation */}
           <nav className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
@@ -59,7 +75,11 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-border text-center">
           <p className="text-xs sm:text-sm text-muted-foreground">
+<<<<<<< HEAD
             © {currentYear} Alex Rivera. All rights reserved.
+=======
+            © {currentYear} Blessing Abba. All rights reserved.
+>>>>>>> d76c475 (my updates)
           </p>
         </div>
       </div>

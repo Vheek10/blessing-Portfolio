@@ -4,6 +4,19 @@
 
 /* Toon Boom Inspired Design System */
 
+<<<<<<< HEAD
+=======
+@font-face {
+  font-family: 'Bionix Fat';
+  src: url('/fonts/Bionix-Fat.woff2') format('woff2'),
+       url('/fonts/Bionix-Fat.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+>>>>>>> d76c475 (my updates)
 @layer base {
   :root {
     /* Core Colors - Dark Theme Default */

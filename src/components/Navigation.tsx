@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+<<<<<<< HEAD
 
 const navLinks = [
   { 
@@ -16,6 +17,17 @@ const navLinks = [
   },
   { 
     label: "Portfolio", 
+=======
+import { Logo } from "@/components/Logo";
+
+const navLinks = [
+  { 
+    label: "ABOUT", 
+    href: "#about"
+  },
+  { 
+    label: "PORTFOLIO", 
+>>>>>>> d76c475 (my updates)
     href: "#portfolio",
     submenu: [
       { label: "All Work", href: "#portfolio", filterId: "all" },
@@ -44,6 +56,10 @@ const navLinks = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+>>>>>>> d76c475 (my updates)
   const { theme, cycleTheme } = useTheme();
 
   useEffect(() => {
@@ -76,6 +92,13 @@ export function Navigation() {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const toggleSubmenu = (href: string) => {
+    setOpenSubmenu(openSubmenu === href ? null : href);
+  };
+
+>>>>>>> d76c475 (my updates)
   return (
     <nav
       className={cn(
@@ -88,12 +111,16 @@ export function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-[4.5rem] md:h-20">
           {/* Logo */}
+<<<<<<< HEAD
           <a
             href="#"
             className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground hover:text-primary transition-colors duration-200"
           >
             STUDIO
           </a>
+=======
+          <Logo />
+>>>>>>> d76c475 (my updates)
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
@@ -103,7 +130,11 @@ export function Navigation() {
                   <NavigationMenuItem key={link.href}>
                     {link.submenu ? (
                       <>
+<<<<<<< HEAD
                         <NavigationMenuTrigger className="h-12 px-4 text-sm font-medium text-foreground/90 hover:text-primary bg-transparent hover:bg-accent/50 data-[state=open]:bg-accent/50 data-[state=open]:text-primary">
+=======
+                        <NavigationMenuTrigger className="h-12 px-4 text-sm font-medium font-body uppercase tracking-wider text-foreground/90 hover:text-primary bg-transparent hover:bg-accent/50 data-[state=open]:bg-accent/50 data-[state=open]:text-primary">
+>>>>>>> d76c475 (my updates)
                           {link.label}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
@@ -113,7 +144,11 @@ export function Navigation() {
                                 <a
                                   key={subItem.href}
                                   href={subItem.href}
+<<<<<<< HEAD
                                   className="block px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors min-h-[36px] flex items-center"
+=======
+                                  className="block px-3 py-2 text-sm font-body uppercase tracking-wider rounded-md hover:bg-accent hover:text-accent-foreground transition-colors min-h-[36px] flex items-center"
+>>>>>>> d76c475 (my updates)
                                   onClick={(e) => {
                                     if ("filterId" in subItem && subItem.filterId) {
                                       handlePortfolioFilter(subItem.filterId);
@@ -130,7 +165,11 @@ export function Navigation() {
                     ) : (
                       <a
                         href={link.href}
+<<<<<<< HEAD
                         className="h-12 px-4 flex items-center text-sm font-medium text-foreground/90 hover:text-primary hover:bg-accent/50 rounded-md transition-colors"
+=======
+                        className="h-12 px-4 flex items-center text-sm font-medium font-body uppercase tracking-wider text-foreground/90 hover:text-primary hover:bg-accent/50 rounded-md transition-colors"
+>>>>>>> d76c475 (my updates)
                       >
                         {link.label}
                       </a>
@@ -143,7 +182,11 @@ export function Navigation() {
             {/* CTA Button */}
             <a
               href="#contact"
+<<<<<<< HEAD
               className="ml-4 px-6 py-2.5 bg-primary text-primary-foreground rounded-md text-sm font-semibold hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:shadow-primary/25"
+=======
+              className="ml-4 px-6 py-2.5 bg-primary text-primary-foreground rounded-md text-sm font-semibold font-body uppercase tracking-wider hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:shadow-primary/25"
+>>>>>>> d76c475 (my updates)
             >
               Get Started
             </a>
@@ -151,7 +194,11 @@ export function Navigation() {
             {/* Theme Toggle */}
             <button
               onClick={cycleTheme}
+<<<<<<< HEAD
               className="ml-2 w-10 h-10 sm:w-11 sm:h-11 rounded-md bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-primary/50 transition-all duration-200 touch-manipulation"
+=======
+              className="ml-2 w-10 h-10 sm:w-11 sm:h-11 rounded-md flex items-center justify-center hover:text-primary transition-all duration-200 touch-manipulation"
+>>>>>>> d76c475 (my updates)
               aria-label="Toggle theme"
             >
               <span className="material-icons text-lg sm:text-xl">
@@ -164,7 +211,11 @@ export function Navigation() {
           <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={cycleTheme}
+<<<<<<< HEAD
               className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-md bg-card border border-border flex items-center justify-center hover:bg-accent transition-colors touch-manipulation"
+=======
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-md flex items-center justify-center hover:text-primary transition-colors touch-manipulation"
+>>>>>>> d76c475 (my updates)
               aria-label="Toggle theme"
             >
               <span className="material-icons text-xl">
@@ -173,7 +224,11 @@ export function Navigation() {
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+<<<<<<< HEAD
               className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-md bg-card border border-border flex items-center justify-center hover:bg-accent transition-colors touch-manipulation"
+=======
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-md flex items-center justify-center hover:text-primary transition-colors touch-manipulation"
+>>>>>>> d76c475 (my updates)
               aria-label="Toggle menu"
             >
               <span className="material-icons text-xl">
@@ -183,6 +238,7 @@ export function Navigation() {
           </div>
         </div>
 
+<<<<<<< HEAD
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-border bg-background/98 backdrop-blur-md max-h-[calc(100vh-4rem)] overflow-y-auto">
@@ -192,10 +248,64 @@ export function Navigation() {
                   <a
                     href={link.href}
                     className="block px-4 py-3 sm:py-4 min-h-[44px] text-base sm:text-lg font-medium text-foreground/90 hover:text-primary hover:bg-accent/50 rounded-md transition-colors touch-manipulation"
+=======
+        {/* Mobile Menu Dropdown */}
+        <div
+          className={cn(
+            "lg:hidden absolute top-full right-0 bg-background border-b border-l border-border shadow-lg transition-all duration-300 ease-in-out overflow-hidden z-40 max-w-sm w-full",
+            isMobileMenuOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
+          )}
+        >
+          <div className="flex flex-col p-6 space-y-6 overflow-y-auto max-h-[80vh]">
+            {navLinks.map((link) => (
+              <div key={link.href} className="flex flex-col space-y-3">
+                {link.submenu ? (
+                  <>
+                    <button
+                      onClick={() => toggleSubmenu(link.href)}
+                      className="font-body text-xl font-medium uppercase tracking-wider text-foreground hover:text-primary transition-colors flex items-center justify-between w-full text-left"
+                    >
+                      {link.label}
+                      <span className={cn(
+                        "material-icons transition-transform duration-200",
+                        openSubmenu === link.href ? "rotate-180" : ""
+                      )}>
+                        expand_more
+                      </span>
+                    </button>
+                    
+                    {/* Submenu - Only show when open */}
+                    {openSubmenu === link.href && (
+                      <div className="flex flex-col pl-4 space-y-3 border-l-2 border-border/50 animate-in slide-in-from-top-2 duration-200">
+                        {link.submenu.map((subItem) => (
+                          <a
+                            key={subItem.href}
+                            href={subItem.href}
+                            className="font-body text-base uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setOpenSubmenu(null);
+                              if ("filterId" in subItem && subItem.filterId) {
+                                handlePortfolioFilter(subItem.filterId);
+                              }
+                            }}
+                          >
+                            {subItem.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="font-body text-xl font-medium uppercase tracking-wider text-foreground hover:text-primary transition-colors"
+>>>>>>> d76c475 (my updates)
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
                   </a>
+<<<<<<< HEAD
                   {link.submenu && (
                     <div className="pl-4 sm:pl-6 mt-1 flex flex-col gap-1">
                       {link.submenu.map((subItem) => (
@@ -220,13 +330,41 @@ export function Navigation() {
               <a
                 href="#contact"
                 className="mt-3 sm:mt-4 px-4 py-3.5 sm:py-4 min-h-[44px] bg-primary text-primary-foreground rounded-md text-base sm:text-lg font-semibold text-center hover:bg-primary/90 transition-colors touch-manipulation"
+=======
+                )}
+              </div>
+            ))}
+
+            <div className="pt-6 border-t border-border flex flex-col gap-6">
+              <a
+                href="#contact"
+                className="font-body font-semibold uppercase tracking-wider text-center w-full py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all shadow-sm"
+>>>>>>> d76c475 (my updates)
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Started
               </a>
+<<<<<<< HEAD
             </div>
           </div>
         )}
+=======
+              
+              <div className="flex justify-center gap-6">
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="material-icons">email</span>
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="material-icons">camera_alt</span>
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="material-icons">videocam</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+>>>>>>> d76c475 (my updates)
       </div>
     </nav>
   );

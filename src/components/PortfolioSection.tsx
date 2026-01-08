@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
+<<<<<<< HEAD
 // Import portfolio images
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
+=======
+// Import portfolio images (using as placeholders for video thumbnails)
+import portfolio1 from "@/assets/portfolio-1.jpg";
+import portfolio2 from "@/assets/portfolio-2.jpg";
+import { VideoPlayer } from "@/components/VideoPlayer";
+>>>>>>> d76c475 (my updates)
 import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 
@@ -15,6 +22,7 @@ const categories = [
   { id: "social", label: "Social Media", icon: "campaign" },
 ];
 
+<<<<<<< HEAD
 const projects = [
   {
     id: 1,
@@ -76,6 +84,104 @@ const projects = [
 
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState("all");
+=======
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  videoSrc: string;
+}
+
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "Beaver Health",
+    category: "cinematography",
+    description: "Cinematic health documentary piece",
+    image: portfolio1,
+    videoSrc: "/videos/Beaver health.mp4"
+  },
+  {
+    id: 2,
+    title: "FCS Thanksgiving Highlights",
+    category: "videography",
+    description: "Event coverage and highlights",
+    image: portfolio2,
+    videoSrc: "/videos/FCS Thanksgiving Highlights.mp4"
+  },
+  {
+    id: 3,
+    title: "Inans Studio Christmas",
+    category: "editing",
+    description: "Holiday themed studio production",
+    image: portfolio3,
+    videoSrc: "/videos/Inans Studio Christmas Video.mp4"
+  },
+  {
+    id: 4,
+    title: "Joy Efurhievwe's Project",
+    category: "social",
+    description: "Oral literature project presentation",
+    image: portfolio4,
+    videoSrc: "/videos/Joy Efurhievwe's Oral lit Project"
+  },
+  {
+    id: 5,
+    title: "FCS Singles Weekend",
+    category: "videography",
+    description: "Event countdown and promo",
+    image: portfolio1,
+    videoSrc: "/videos/FCS Singles Weekend {3 days to go}.mp4"
+  },
+  {
+    id: 6,
+    title: "FCS Invite Video",
+    category: "videography",
+    description: "Event invitation and teaser",
+    image: portfolio2,
+    videoSrc: "/videos/FCS Invite Video.mp4"
+  },
+  {
+    id: 7,
+    title: "Hours of Encounter",
+    category: "videography",
+    description: "Event coverage in Ile Oluji",
+    image: portfolio3,
+    videoSrc: "/videos/Hours of Encounter Ile Oluji.mp4"
+  },
+  {
+    id: 8,
+    title: "FCS FYB Award Night",
+    category: "social",
+    description: "Award ceremony coverage",
+    image: portfolio4,
+    videoSrc: "/videos/FCS FYB Award Night.mp4"
+  },
+  {
+    id: 9,
+    title: "FCS Variety Weekend",
+    category: "videography",
+    description: "Special event invitation",
+    image: portfolio1,
+    videoSrc: "/videos/FCS Variety Weekend Invite.mp4"
+  }
+];
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+// ... imports remain same ...
+
+export function PortfolioSection() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedVideo, setSelectedVideo] = useState<Project | null>(null);
+>>>>>>> d76c475 (my updates)
 
   useEffect(() => {
     const handlePortfolioFilter = (event: CustomEvent<{ filterId: string }>) => {
@@ -137,6 +243,7 @@ export function PortfolioSection() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
+<<<<<<< HEAD
               className="portfolio-item group aspect-[4/3] cursor-pointer opacity-0 animate-scale-in relative overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -152,11 +259,45 @@ export function PortfolioSection() {
               <div className="play-overlay group-hover:opacity-100 z-10 flex items-center justify-center">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_30px_hsl(var(--primary)/0.5)] transition-transform group-hover:scale-110">
                   <span className="material-icons text-primary-foreground text-xl sm:text-2xl md:text-3xl">
+=======
+              className="portfolio-item group aspect-[4/3] cursor-pointer opacity-0 animate-scale-in relative overflow-hidden bg-black rounded-xl border-2 border-white/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(var(--primary),0.2)] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300"
+              style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => setSelectedVideo(project)}
+            >
+              {/* Video Preview - Removed poster to show first frame */}
+              <video
+                src={project.videoSrc}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget;
+                  // Reset to start if not playing
+                  if (video.paused) {
+                    video.currentTime = 0;
+                    video.play().catch(error => console.log("Play failed:", error));
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget;
+                  video.pause();
+                  video.currentTime = 0;
+                }}
+              />
+              
+              {/* Play Icon Overlay - Fades out on hover */}
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg">
+                  <span className="material-icons text-white text-2xl sm:text-4xl ml-1 opacity-90">
+>>>>>>> d76c475 (my updates)
                     play_arrow
                   </span>
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                 <h3 className="font-display text-lg sm:text-xl text-foreground mb-1">
@@ -168,6 +309,21 @@ export function PortfolioSection() {
               {/* Category Badge */}
               <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20">
                 <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80">
+=======
+              {/* Dark Overlay - Hidden on hover to see video clearly */}
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
+
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                <h3 className="font-display text-lg sm:text-xl text-white mb-1 shadow-sm">
+                  {project.title}
+                </h3>
+              </div>
+
+              {/* Category Badge */}
+              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 pointer-events-none">
+                <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80 shadow-sm">
+>>>>>>> d76c475 (my updates)
                   {categories.find((c) => c.id === project.category)?.label}
                 </span>
               </div>
@@ -175,7 +331,70 @@ export function PortfolioSection() {
           ))}
           </div>
         </div>
+<<<<<<< HEAD
       </div>
+=======
+
+        {/* More Projects Button */}
+        <div className="flex justify-center mt-12 sm:mt-16">
+          <a
+            href="https://drive.google.com/drive/folders/1NsfMhSvzhO3kcRXUKHwBsjTDA7KeyQd6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold uppercase tracking-wider rounded-lg hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
+          >
+            <span className="material-icons text-xl">open_in_new</span>
+            Click Here to See My Other Projects
+            <span className="material-icons text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <Dialog open={!!selectedVideo} onOpenChange={(open) => !open && setSelectedVideo(null)}>
+        <DialogContent className="max-w-6xl p-0 bg-zinc-950 border-zinc-800 overflow-hidden text-white sm:rounded-xl">
+          <DialogHeader className="sr-only">
+             <DialogTitle>{selectedVideo?.title}</DialogTitle>
+          </DialogHeader>
+          
+          {selectedVideo && (
+            <div className="flex flex-col">
+              {/* Video Container */}
+              <div className="relative aspect-video w-full bg-black group">
+                 <VideoPlayer
+                  src={selectedVideo.videoSrc}
+                  autoPlay={true}
+                  title={selectedVideo.title}
+                />
+              </div>
+
+              {/* Project Details */}
+              <div className="p-6 sm:p-8 bg-zinc-900/50 backdrop-blur-xl border-t border-zinc-800/50">
+                <div className="flex flex-col sm:flex-row gap-6 justify-between items-start">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 mb-2">
+                       <span className="px-2 py-1 text-[10px] uppercase font-medium tracking-wider bg-primary/20 text-primary rounded-md border border-primary/20">
+                          {categories.find((c) => c.id === selectedVideo.category)?.label}
+                       </span>
+                    </div>
+                    <h3 className="font-display text-2xl sm:text-3xl text-zinc-100">
+                      {selectedVideo.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl">
+                      {selectedVideo.description}
+                    </p>
+                  </div>
+                  
+                  {/* Share/Action placeholder or just layout balance */}
+                  <div className="hidden sm:block">
+                     {/* Could add share buttons here later */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+>>>>>>> d76c475 (my updates)
     </section>
   );
 }

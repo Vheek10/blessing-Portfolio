@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+<<<<<<< HEAD
+=======
+import { useToast } from "@/hooks/use-toast";
+import { send } from "@emailjs/browser";
+>>>>>>> d76c475 (my updates)
 
 const socialLinks = [
 	{ icon: "mail", label: "Email", href: "mailto:abbablessing075@gmail.com" },
@@ -25,11 +30,91 @@ export function ContactSection() {
 		subject: "",
 		message: "",
 	});
+<<<<<<< HEAD
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		// Form submission logic
 		console.log("Form submitted:", formData);
+=======
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { toast } = useToast();
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+
+		console.log("Attempting to send email...");
+
+		try {
+			// Get EmailJS credentials from environment variables
+			const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+			// Check if credentials are configured
+			if (!serviceId || !templateId || !publicKey) {
+				const missing = [];
+				if (!serviceId) missing.push("VITE_EMAILJS_SERVICE_ID");
+				if (!templateId) missing.push("VITE_EMAILJS_TEMPLATE_ID");
+				if (!publicKey) missing.push("VITE_EMAILJS_PUBLIC_KEY");
+				
+				throw new Error(`EmailJS credentials missing: ${missing.join(", ")}. Please check your .env.local file and restart the dev server.`);
+			}
+
+			// Send email using EmailJS
+			if (typeof send !== 'function') {
+				throw new Error("EmailJS 'send' function is not available. Try restarting your dev server.");
+			}
+
+			const result = await send(
+				serviceId,
+				templateId,
+				{
+					from_name: formData.name,
+					from_email: formData.email,
+					subject: formData.subject,
+					message: formData.message,
+					to_name: "Blessing Abba",
+				},
+				publicKey
+			);
+
+			console.log("EmailJS Success Result:", result);
+
+			// Show success message
+			toast({
+				title: "Message Sent! ✓",
+				description: "Thank you for reaching out. I'll get back to you soon!",
+			});
+
+			// Reset form
+			setFormData({
+				name: "",
+				email: "",
+				subject: "",
+				message: "",
+			});
+		} catch (error: any) {
+			console.error("EmailJS Error Object:", error);
+			
+			// Extract detailed error message
+			// EmailJS errors often have .text or .message
+			let detail = "Check console for details.";
+			if (error?.text) detail = error.text;
+			else if (error?.message) detail = error.message;
+			else if (typeof error === 'string') detail = error;
+			
+			// Show error message
+			toast({
+				title: "Failed to Send Message",
+				description: `Detail: ${detail}`,
+				variant: "destructive",
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
+>>>>>>> d76c475 (my updates)
 	};
 
 	const handleChange = (
@@ -74,7 +159,11 @@ export function ContactSection() {
 										Email
 									</div>
 									<a
+<<<<<<< HEAD
 										href="mailto:hello@alexrivera.com"
+=======
+										href="mailto:abbablessing075@gmail.com"
+>>>>>>> d76c475 (my updates)
 										className="text-sm sm:text-base text-foreground hover:text-primary transition-colors break-all">
 										abbablessing075@gmail.com
 									</a>
@@ -135,6 +224,10 @@ export function ContactSection() {
 										className="form-input min-h-[44px] text-sm sm:text-base"
 										placeholder="Full Name"
 										required
+<<<<<<< HEAD
+=======
+										disabled={isSubmitting}
+>>>>>>> d76c475 (my updates)
 									/>
 								</div>
 								<div>
@@ -152,6 +245,10 @@ export function ContactSection() {
 										className="form-input min-h-[44px] text-sm sm:text-base"
 										placeholder="name@example.com"
 										required
+<<<<<<< HEAD
+=======
+										disabled={isSubmitting}
+>>>>>>> d76c475 (my updates)
 									/>
 								</div>
 							</div>
@@ -168,7 +265,12 @@ export function ContactSection() {
 									value={formData.subject}
 									onChange={handleChange}
 									className="form-input min-h-[44px] text-sm sm:text-base"
+<<<<<<< HEAD
 									required>
+=======
+									required
+									disabled={isSubmitting}>
+>>>>>>> d76c475 (my updates)
 									<option value="">Select a service</option>
 									<option value="cinematography">Cinematography</option>
 									<option value="videography">Videography</option>
@@ -193,17 +295,41 @@ export function ContactSection() {
 									className="form-input resize-none text-sm sm:text-base min-h-[120px]"
 									placeholder="Tell me about your project..."
 									required
+<<<<<<< HEAD
+=======
+									disabled={isSubmitting}
+>>>>>>> d76c475 (my updates)
 								/>
 							</div>
 
 							<Button
 								type="submit"
 								variant="hero"
+<<<<<<< HEAD
 								className="w-full min-h-[48px] text-sm sm:text-base touch-manipulation">
 								<span className="material-icons mr-2 text-lg sm:text-xl">
 									send
 								</span>
 								Send Message
+=======
+								className="w-full min-h-[48px] text-sm sm:text-base touch-manipulation"
+								disabled={isSubmitting}>
+								{isSubmitting ? (
+									<>
+										<span className="material-icons mr-2 text-lg sm:text-xl animate-spin">
+											refresh
+										</span>
+										Sending...
+									</>
+								) : (
+									<>
+										<span className="material-icons mr-2 text-lg sm:text-xl">
+											send
+										</span>
+										Send Message
+									</>
+								)}
+>>>>>>> d76c475 (my updates)
 							</Button>
 						</form>
 					</div>
