@@ -1,32 +1,21 @@
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background with Image */}
+      {/* 3D Video Background */}
       <div className="absolute inset-0">
-        <img 
-          src={heroBg} 
-          alt="" 
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        <video 
+          src={heroVideo} 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15)_0%,transparent_70%)]" />
-        
-        {/* Animated gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-purple/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "1s" }} />
-      </div>
-
-      {/* Video Reel Mockup */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-        <div className="w-full max-w-6xl aspect-video border-2 border-primary/30 rounded-2xl flex items-center justify-center">
-          <div className="w-24 h-24 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center animate-pulse-glow">
-            <span className="material-icons text-primary text-4xl">play_arrow</span>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.1)_0%,transparent_70%)]" />
       </div>
 
       {/* Content */}
