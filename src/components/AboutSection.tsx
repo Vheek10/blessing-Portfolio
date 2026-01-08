@@ -2,12 +2,12 @@ import profilePhoto from "@/assets/profile-photo.jpg";
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 bg-card">
+    <section id="about" className="py-24 bg-card overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center perspective-container">
+          {/* Image with 3D Effect */}
           <div className="relative opacity-0 animate-slide-in-left" style={{ animationDelay: "0.2s" }}>
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden card-elevated">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden tilt-3d glass-3d">
               <img 
                 src={profilePhoto} 
                 alt="Alex Rivera - Cinematographer" 
@@ -16,13 +16,14 @@ export function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
             </div>
             
-            {/* Floating Frame Elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-primary/40 rounded-lg" />
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 border-2 border-primary/20 rounded-lg" />
+            {/* 3D Floating Frame Elements */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-primary/40 rounded-lg float-3d" />
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 border-2 border-primary/20 rounded-lg float-3d" style={{ animationDelay: "1s" }} />
+            <div className="absolute top-1/2 -right-8 w-16 h-16 bg-primary/20 rounded-full blur-xl float-3d" style={{ animationDelay: "2s" }} />
           </div>
 
           {/* Content */}
-          <div className="opacity-0 animate-slide-in-right" style={{ animationDelay: "0.4s" }}>
+          <div className="opacity-0 animate-slide-in-right depth-layer" style={{ animationDelay: "0.4s" }}>
             <span className="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm uppercase tracking-widest mb-4">
               About Me
             </span>
@@ -51,20 +52,22 @@ export function AboutSection() {
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 mt-10 pt-10 border-t border-border">
-              <div>
-                <div className="font-display text-4xl text-primary mb-1">8+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Years Experience</div>
-              </div>
-              <div>
-                <div className="font-display text-4xl text-primary mb-1">150+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Projects</div>
-              </div>
-              <div>
-                <div className="font-display text-4xl text-primary mb-1">50+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Happy Clients</div>
-              </div>
+            {/* Stats with 3D Cards */}
+            <div className="grid grid-cols-3 gap-4 mt-10 pt-10 border-t border-border">
+              {[
+                { value: "8+", label: "Years Experience" },
+                { value: "150+", label: "Projects" },
+                { value: "50+", label: "Happy Clients" },
+              ].map((stat, index) => (
+                <div 
+                  key={stat.label} 
+                  className="card-3d p-4 text-center"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  <div className="font-display text-3xl md:text-4xl text-primary mb-1">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

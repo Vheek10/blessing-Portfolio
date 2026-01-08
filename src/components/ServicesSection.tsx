@@ -47,47 +47,49 @@ export function ServicesSection() {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className="card-elevated p-8 rounded-2xl group opacity-0 animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.15}s` }}
-            >
-              {/* Icon */}
-              <div className="service-icon mb-6 group-hover:scale-110 transition-transform">
-                <span className="material-icons text-primary text-3xl">
-                  {service.icon}
-                </span>
+        {/* Services Grid with 3D Perspective */}
+        <div className="perspective-container">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => (
+              <div
+                key={service.title}
+                className="card-3d p-8 group opacity-0 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                {/* 3D Icon */}
+                <div className="service-icon mb-6 group-hover:scale-110 float-3d" style={{ animationDelay: `${index * 0.5}s` }}>
+                  <span className="material-icons text-primary text-3xl">
+                    {service.icon}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="font-display text-2xl text-foreground mb-3">
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2">
+                  {service.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-center gap-2 text-sm text-foreground/80"
+                    >
+                      <span className="material-icons text-primary text-base">
+                        check_circle
+                      </span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              {/* Title */}
-              <h3 className="font-display text-2xl text-foreground mb-3">
-                {service.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                {service.description}
-              </p>
-
-              {/* Features */}
-              <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-2 text-sm text-foreground/80"
-                  >
-                    <span className="material-icons text-primary text-base">
-                      check_circle
-                    </span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
