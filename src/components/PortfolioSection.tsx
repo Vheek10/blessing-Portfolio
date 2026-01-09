@@ -68,21 +68,12 @@ const projects: Project[] = [
     videoSrc: "/videos/FCS Singles Weekend {3 days to go}.mp4"
   },
   {
-    id: 2,
     id: 6,
     title: "FCS Invite Video",
     category: "videography",
     description: "Event invitation and teaser",
     image: portfolio2,
     videoSrc: "/videos/FCS Invite Video.mp4"
-  },
-  {
-    id: 7,
-    title: "Hours of Encounter",
-    category: "videography",
-    description: "Event coverage in Ile Oluji",
-    image: portfolio3,
-    videoSrc: "/videos/Hours of Encounter Ile Oluji.mp4"
   },
   {
     id: 8,
@@ -171,65 +162,106 @@ export function PortfolioSection() {
         </div>
 
         {/* Gallery Grid with 3D Perspective */}
-        <div className="perspective-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
-          {filteredProjects.map((project, index) => (
-            <div
-              key={project.id}
-              className="portfolio-item group aspect-[4/3] cursor-pointer opacity-0 animate-scale-in relative overflow-hidden bg-black rounded-xl border-2 border-white/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(var(--primary),0.2)] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              onClick={() => setSelectedVideo(project)}
-            >
-              {/* Video Preview - Removed poster to show first frame */}
-              <video
-                src={project.videoSrc}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                onMouseEnter={(e) => {
-                  const video = e.currentTarget;
-                  // Reset to start if not playing
-                  if (video.paused) {
+        {/* Marquee Wrapper */}
+        <div className="perspective-container overflow-hidden group/marquee pause-on-hover -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="animate-marquee flex gap-4 sm:gap-6 py-8">
+            {/* First Set of Projects */}
+            {filteredProjects.map((project, index) => (
+              <div
+                key={`${project.id}-first`}
+                className="portfolio-item group/item aspect-[4/3] cursor-pointer opacity-0 animate-slide-in-left relative overflow-hidden bg-black rounded-xl border-2 border-white/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(var(--primary),0.2)] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300 flex-shrink-0 w-[75vw] sm:w-[350px] lg:w-[400px]"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => setSelectedVideo(project)}
+              >
+                <video
+                  src={project.videoSrc}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  onMouseEnter={(e) => {
+                    const video = e.currentTarget;
+                    if (video.paused) {
+                      video.currentTime = 0;
+                      video.play().catch(error => console.log("Play failed:", error));
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const video = e.currentTarget;
+                    video.pause();
                     video.currentTime = 0;
-                    video.play().catch(error => console.log("Play failed:", error));
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  const video = e.currentTarget;
-                  video.pause();
-                  video.currentTime = 0;
-                }}
-              />
-              
-              {/* Play Icon Overlay - Fades out on hover */}
-              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg">
-                  <span className="material-icons text-white text-2xl sm:text-4xl ml-1 opacity-90">
-                    play_arrow
+                  }}
+                />
+                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none group-hover/item:opacity-0 transition-opacity duration-300">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg">
+                    <span className="material-icons text-white text-2xl sm:text-4xl ml-1 opacity-90">
+                      play_arrow
+                    </span>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-black/10 group-hover/item:bg-transparent transition-colors duration-300 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover/item:translate-y-0 group-hover/item:opacity-100 transition-all duration-300 pointer-events-none">
+                  <h3 className="font-display text-lg sm:text-xl text-white mb-1 shadow-sm">
+                    {project.title}
+                  </h3>
+                </div>
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 pointer-events-none">
+                  <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80 shadow-sm">
+                    {categories.find((c) => c.id === project.category)?.label}
                   </span>
                 </div>
               </div>
+            ))}
 
-              {/* Dark Overlay - Hidden on hover to see video clearly */}
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
-
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-                <h3 className="font-display text-lg sm:text-xl text-white mb-1 shadow-sm">
-                  {project.title}
-                </h3>
+            {/* Duplicated Set for Infinite Loop */}
+            {filteredProjects.map((project, index) => (
+              <div
+                key={`${project.id}-second`}
+                className="portfolio-item group/item aspect-[4/3] cursor-pointer opacity-0 animate-slide-in-left relative overflow-hidden bg-black rounded-xl border-2 border-white/5 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(var(--primary),0.2)] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300 flex-shrink-0 w-[75vw] sm:w-[350px] lg:w-[400px]"
+                style={{ animationDelay: `${(index + filteredProjects.length) * 0.1}s` }}
+                onClick={() => setSelectedVideo(project)}
+              >
+                <video
+                  src={project.videoSrc}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  onMouseEnter={(e) => {
+                    const video = e.currentTarget;
+                    if (video.paused) {
+                      video.currentTime = 0;
+                      video.play().catch(error => console.log("Play failed:", error));
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const video = e.currentTarget;
+                    video.pause();
+                    video.currentTime = 0;
+                  }}
+                />
+                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none group-hover/item:opacity-0 transition-opacity duration-300">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg">
+                    <span className="material-icons text-white text-2xl sm:text-4xl ml-1 opacity-90">
+                      play_arrow
+                    </span>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-black/10 group-hover/item:bg-transparent transition-colors duration-300 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-20 translate-y-4 opacity-0 group-hover/item:translate-y-0 group-hover/item:opacity-100 transition-all duration-300 pointer-events-none">
+                  <h3 className="font-display text-lg sm:text-xl text-white mb-1 shadow-sm">
+                    {project.title}
+                  </h3>
+                </div>
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 pointer-events-none">
+                  <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80 shadow-sm">
+                    {categories.find((c) => c.id === project.category)?.label}
+                  </span>
+                </div>
               </div>
-
-              {/* Category Badge */}
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 pointer-events-none">
-                <span className="px-2 py-0.5 sm:py-1 bg-background/80 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-wider rounded-full text-foreground/80 shadow-sm">
-                  {categories.find((c) => c.id === project.category)?.label}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
 
