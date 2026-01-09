@@ -179,7 +179,7 @@ export function PortfolioSection() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   onMouseEnter={(e) => {
                     const video = e.currentTarget;
                     if (video.paused) {
@@ -228,7 +228,7 @@ export function PortfolioSection() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   onMouseEnter={(e) => {
                     const video = e.currentTarget;
                     if (video.paused) {

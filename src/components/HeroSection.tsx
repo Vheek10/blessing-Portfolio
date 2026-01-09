@@ -12,7 +12,7 @@ export function HeroSection() {
 					loop
 					muted
 					playsInline
-					preload="metadata"
+					preload="auto"
 					className="absolute inset-0 w-full h-full object-cover opacity-60 parallax-layer-back hidden sm:block"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background parallax-layer-mid" />
