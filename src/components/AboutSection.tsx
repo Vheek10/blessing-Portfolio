@@ -34,11 +34,8 @@ export function AboutSection() {
 
             <div className="space-y-3 sm:space-y-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
               <p>
-<<<<<<< HEAD
-                With over 8 years of experience in the creative industry, I specialize in 
-=======
                 With over 3 years of experience in the creative industry, I specialize in 
->>>>>>> d76c475 (my updates)
+
                 transforming ideas into compelling visual narratives. My journey began behind 
                 the lens, capturing moments that matter, and has evolved into a comprehensive 
                 approach to visual storytelling.
@@ -59,15 +56,10 @@ export function AboutSection() {
             {/* Stats with 3D Cards */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 mt-8 sm:mt-10 pt-8 sm:pt-10 border-t border-border">
               {[
-<<<<<<< HEAD
-                { value: "8+", label: "Years Experience" },
-                { value: "150+", label: "Projects" },
-                { value: "50+", label: "Happy Clients" },
-=======
                 { value: "3+", label: "Years Experience" },
                 { value: "40+", label: "Projects" },
                 { value: "20+", label: "Happy Clients" },
->>>>>>> d76c475 (my updates)
+
               ].map((stat, index) => (
                 <div 
                   key={stat.label} 

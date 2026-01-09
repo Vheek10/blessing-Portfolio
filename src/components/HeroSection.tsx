@@ -60,11 +60,8 @@ export function HeroSection() {
 
 					{/* Subtitle */}
 					<p
-<<<<<<< HEAD
-						className="font-display text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl text-primary tracking-wide sm:tracking-widest mb-6 sm:mb-8 px-2 opacity-0 animate-fade-in-up leading-relaxed"
-=======
 						className="font-body text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl text-primary tracking-wide sm:tracking-widest mb-6 sm:mb-8 px-2 opacity-0 animate-fade-in-up leading-relaxed"
->>>>>>> d76c475 (my updates)
+
 						style={{ animationDelay: "0.2s" }}>
 						CINEMATOGRAPHER | VIDEOGRAPHER
 						<br className="sm:hidden" /> VIDEO EDITOR | SOCIAL MEDIA MANAGER

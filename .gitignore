@@ -22,8 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-=======
 public/videos/*.mp4 
 public/videos/*.part 
 *.mp4
@@ -45,4 +43,4 @@ public/videos/*.part
 .env.*.local
 # Keep .env.example for documentation
 !.env.example
->>>>>>> d76c475 (my updates)
+
