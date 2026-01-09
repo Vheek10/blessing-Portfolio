@@ -22,20 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-public/videos/*.mp4 
-public/videos/*.part 
-*.mp4
-*.mov
-*.avi
-*.mkv
-*.webm
-*.flv
-*.wmv
-*.mpg
-*.mpeg
-*.m4v
-*.ogv
-*.3gp
 
 # Environment variables
 .env
