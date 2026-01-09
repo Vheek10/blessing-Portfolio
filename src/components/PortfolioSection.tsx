@@ -57,7 +57,7 @@ const projects: Project[] = [
     category: "social",
     description: "Oral literature project presentation",
     image: portfolio4,
-    videoSrc: "/videos/Joy Efurhievwe's Oral lit Project"
+    videoSrc: "/videos/Joy Efurhievwe's Oral lit Project.mp4"
   },
   {
     id: 5,

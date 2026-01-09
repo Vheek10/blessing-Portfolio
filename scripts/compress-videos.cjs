@@ -1,10 +1,10 @@
 const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = require('ffmpeg-static');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const fs = require('fs');
 const path = require('path');
 
-// Set ffmpeg path to the static binary
-ffmpeg.setFfmpegPath(ffmpegPath);
+// Set ffmpeg path to the installer binary
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 const inputDir = path.join(__dirname, '..', 'public', 'videos');
 const outputDir = path.join(__dirname, '..', 'public', 'videos', 'compressed');
@@ -50,10 +50,10 @@ const compressVideo = (filename) => {
 
 async function run() {
     try {
-        const files = fs.readdirSync(inputDir).filter(file => file.endsWith('.mp4'));
+        const files = fs.readdirSync(inputDir).filter(file => file.endsWith('.mp4') && file !== 'hero-video.mp4');
         
         if (files.length === 0) {
-            console.log('No .mp4 files found in public/videos');
+            console.log('No .mp4 files (excluding hero-video.mp4) found in public/videos');
             return;
         }
 

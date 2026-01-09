@@ -1,15 +1,13 @@
 /** @format */
 
 import { Button } from "@/components/ui/button";
-import heroVideo from "@/assets/hero-video.mp4";
-
 export function HeroSection() {
 	return (
 		<section className="relative min-h-screen flex items-center justify-center overflow-hidden perspective-container pt-16 sm:pt-[4.5rem] md:pt-20">
 			{/* 3D Video Background */}
 			<div className="absolute inset-0 parallax-3d">
 				<video
-					src={heroVideo}
+					src="/videos/hero-video.mp4"
 					autoPlay
 					loop
 					muted
