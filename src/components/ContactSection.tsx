@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { send } from "@emailjs/browser";
+import { send, init } from "@emailjs/browser";
 
 
 const socialLinks = [
@@ -43,6 +43,12 @@ export function ContactSection() {
 			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+			console.log("EmailJS Config Check:", {
+				hasServiceId: !!serviceId,
+				hasTemplateId: !!templateId,
+				hasPublicKey: !!publicKey,
+			});
+
 			// Check if credentials are configured
 			if (!serviceId || !templateId || !publicKey) {
 				const missing = [];
@@ -50,8 +56,13 @@ export function ContactSection() {
 				if (!templateId) missing.push("VITE_EMAILJS_TEMPLATE_ID");
 				if (!publicKey) missing.push("VITE_EMAILJS_PUBLIC_KEY");
 				
-				throw new Error(`EmailJS credentials missing: ${missing.join(", ")}. Please check your .env.local file and restart the dev server.`);
+				const errorMsg = `EmailJS credentials missing: ${missing.join(", ")}. Please ensure these are defined in your .env file and RESTART your dev server.`;
+				console.error(errorMsg);
+				throw new Error(errorMsg);
 			}
+
+			// Initialize EmailJS with public key
+			init(publicKey);
 
 			// Send email using EmailJS
 			if (typeof send !== 'function') {
@@ -87,14 +98,18 @@ export function ContactSection() {
 				message: "",
 			});
 		} catch (error: any) {
-			console.error("EmailJS Error Object:", error);
+			console.error("Detailed EmailJS Error:", error);
 			
 			// Extract detailed error message
-			// EmailJS errors often have .text or .message
 			let detail = "Check console for details.";
 			if (error?.text) detail = error.text;
 			else if (error?.message) detail = error.message;
 			else if (typeof error === 'string') detail = error;
+			
+			// Specific handling for common fetch issues
+			if (detail === "Failed to fetch") {
+				detail = "Network error. Please check your internet connection or if EmailJS is blocked by an adblocker.";
+			}
 			
 			// Show error message
 			toast({
@@ -105,7 +120,6 @@ export function ContactSection() {
 		} finally {
 			setIsSubmitting(false);
 		}
-
 	};
 
 	const handleChange = (
