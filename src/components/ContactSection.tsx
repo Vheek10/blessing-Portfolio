@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { send, init } from "@emailjs/browser";
-
+import emailjs from "@emailjs/browser";
 
 const socialLinks = [
 	{ icon: "mail", label: "Email", href: "mailto:abbablessing075@gmail.com" },
@@ -35,18 +34,29 @@ export function ContactSection() {
 		e.preventDefault();
 		setIsSubmitting(true);
 
-		console.log("Attempting to send email...");
+		console.log("--- EmailJS Debug Start ---");
 
 		try {
 			// Get EmailJS credentials from environment variables
-			const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+			// In Vite, we use import.meta.env instead of process.env
+			const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim();
+			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim();
+			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim();
 
-			console.log("EmailJS Config Check:", {
-				hasServiceId: !!serviceId,
-				hasTemplateId: !!templateId,
-				hasPublicKey: !!publicKey,
+			// Helper to mask values for safe logging
+			const mask = (val: string | undefined) => {
+				if (!val) return "MISSING";
+				if (val.length <= 4) return "****";
+				return val.substring(0, 2) + "..." + val.substring(val.length - 2);
+			};
+
+			console.log("Config Details:", {
+				serviceId: mask(serviceId),
+				templateId: mask(templateId),
+				publicKey: mask(publicKey),
+				allKeysLogged: Object.keys(import.meta.env).filter((k) =>
+					k.startsWith("VITE_EMAILJS_"),
+				),
 			});
 
 			// Check if credentials are configured
@@ -55,21 +65,20 @@ export function ContactSection() {
 				if (!serviceId) missing.push("VITE_EMAILJS_SERVICE_ID");
 				if (!templateId) missing.push("VITE_EMAILJS_TEMPLATE_ID");
 				if (!publicKey) missing.push("VITE_EMAILJS_PUBLIC_KEY");
-				
-				const errorMsg = `EmailJS credentials missing: ${missing.join(", ")}. Please ensure these are defined in your .env file and RESTART your dev server.`;
+
+				const errorMsg = `EmailJS credentials missing: ${missing.join(
+					", ",
+				)}. Please ensure these are defined in your .env file and RESTART your dev server.`;
 				console.error(errorMsg);
 				throw new Error(errorMsg);
 			}
 
 			// Initialize EmailJS with public key
-			init(publicKey);
+			emailjs.init(publicKey);
 
-			// Send email using EmailJS
-			if (typeof send !== 'function') {
-				throw new Error("EmailJS 'send' function is not available. Try restarting your dev server.");
-			}
+			console.log("Attempting to send...");
 
-			const result = await send(
+			const result = await emailjs.send(
 				serviceId,
 				templateId,
 				{
@@ -79,7 +88,7 @@ export function ContactSection() {
 					message: formData.message,
 					to_name: "Blessing Abba",
 				},
-				publicKey
+				publicKey,
 			);
 
 			console.log("EmailJS Success Result:", result);
@@ -99,18 +108,19 @@ export function ContactSection() {
 			});
 		} catch (error: any) {
 			console.error("Detailed EmailJS Error:", error);
-			
+
 			// Extract detailed error message
 			let detail = "Check console for details.";
 			if (error?.text) detail = error.text;
 			else if (error?.message) detail = error.message;
-			else if (typeof error === 'string') detail = error;
-			
+			else if (typeof error === "string") detail = error;
+
 			// Specific handling for common fetch issues
 			if (detail === "Failed to fetch") {
-				detail = "Network error. Please check your internet connection or if EmailJS is blocked by an adblocker.";
+				detail =
+					"Network error. This usually means the request was blocked by an adblocker or your internet connection.";
 			}
-			
+
 			// Show error message
 			toast({
 				title: "Failed to Send Message",
@@ -119,6 +129,7 @@ export function ContactSection() {
 			});
 		} finally {
 			setIsSubmitting(false);
+			console.log("--- EmailJS Debug End ---");
 		}
 	};
 
@@ -165,7 +176,6 @@ export function ContactSection() {
 									</div>
 									<a
 										href="mailto:abbablessing075@gmail.com"
-
 										className="text-sm sm:text-base text-foreground hover:text-primary transition-colors break-all">
 										abbablessing075@gmail.com
 									</a>
@@ -227,7 +237,6 @@ export function ContactSection() {
 										placeholder="Full Name"
 										required
 										disabled={isSubmitting}
-
 									/>
 								</div>
 								<div>
@@ -246,7 +255,6 @@ export function ContactSection() {
 										placeholder="name@example.com"
 										required
 										disabled={isSubmitting}
-
 									/>
 								</div>
 							</div>
@@ -265,7 +273,6 @@ export function ContactSection() {
 									className="form-input min-h-[44px] text-sm sm:text-base"
 									required
 									disabled={isSubmitting}>
-
 									<option value="">Select a service</option>
 									<option value="cinematography">Cinematography</option>
 									<option value="videography">Videography</option>
@@ -291,7 +298,6 @@ export function ContactSection() {
 									placeholder="Tell me about your project..."
 									required
 									disabled={isSubmitting}
-
 								/>
 							</div>
 
@@ -315,7 +321,6 @@ export function ContactSection() {
 										Send Message
 									</>
 								)}
-
 							</Button>
 						</form>
 					</div>
