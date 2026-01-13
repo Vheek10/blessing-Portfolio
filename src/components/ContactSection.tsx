@@ -32,74 +32,58 @@ export function ContactSection() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (
+			!formData.name.trim() ||
+			!formData.email.trim() ||
+			!formData.message.trim()
+		) {
+			toast({
+				title: "Validation Error",
+				description: "Please fill in all required fields.",
+				variant: "destructive",
+			});
+			return;
+		}
+
 		setIsSubmitting(true);
 
-		console.log("--- EmailJS Debug Start ---");
-
 		try {
-			// Get EmailJS credentials from environment variables
-			// In Vite, we use import.meta.env instead of process.env
 			const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim();
 			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim();
 			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim();
 
-			// Helper to mask values for safe logging
-			const mask = (val: string | undefined) => {
-				if (!val) return "MISSING";
-				if (val.length <= 4) return "****";
-				return val.substring(0, 2) + "..." + val.substring(val.length - 2);
-			};
-
-			console.log("Config Details:", {
-				serviceId: mask(serviceId),
-				templateId: mask(templateId),
-				publicKey: mask(publicKey),
-				allKeysLogged: Object.keys(import.meta.env).filter((k) =>
-					k.startsWith("VITE_EMAILJS_"),
-				),
-			});
-
-			// Check if credentials are configured
 			if (!serviceId || !templateId || !publicKey) {
-				const missing = [];
-				if (!serviceId) missing.push("VITE_EMAILJS_SERVICE_ID");
-				if (!templateId) missing.push("VITE_EMAILJS_TEMPLATE_ID");
-				if (!publicKey) missing.push("VITE_EMAILJS_PUBLIC_KEY");
-
-				const errorMsg = `EmailJS credentials missing: ${missing.join(
-					", ",
-				)}. Please ensure these are defined in your .env file and RESTART your dev server.`;
-				console.error(errorMsg);
-				throw new Error(errorMsg);
+				toast({
+					title: "Configuration Error",
+					description:
+						"Email service is not configured. Please contact site administrator.",
+					variant: "destructive",
+				});
+				return;
 			}
 
-			// Initialize EmailJS with public key
-			emailjs.init(publicKey);
-
-			console.log("Attempting to send...");
-
-			const result = await emailjs.send(
+			await emailjs.send(
 				serviceId,
 				templateId,
 				{
 					from_name: formData.name,
 					from_email: formData.email,
-					subject: formData.subject,
+					subject: formData.subject || "General Inquiry",
 					message: formData.message,
 					to_name: "Blessing Abba",
+					project_type: formData.subject,
+					date: new Date().toLocaleDateString(),
 				},
 				publicKey,
 			);
 
-			console.log("EmailJS Success Result:", result);
-
-			// Show success message
 			toast({
-				title: "Message Sent! ✓",
-				description: "Thank you for reaching out. I'll get back to you soon!",
+				title: "Message Sent Successfully!",
+				description:
+					"Thank you for reaching out. I'll get back to you within 24 hours.",
 			});
 
-			// Reset form
 			setFormData({
 				name: "",
 				email: "",
@@ -107,29 +91,38 @@ export function ContactSection() {
 				message: "",
 			});
 		} catch (error: any) {
-			console.error("Detailed EmailJS Error:", error);
+			let detail = "Please try again in a few moments.";
+			let title = "Message Failed to Send";
 
-			// Extract detailed error message
-			let detail = "Check console for details.";
-			if (error?.text) detail = error.text;
-			else if (error?.message) detail = error.message;
-			else if (typeof error === "string") detail = error;
-
-			// Specific handling for common fetch issues
-			if (detail === "Failed to fetch") {
+			if (error?.message?.includes("Failed to fetch")) {
 				detail =
-					"Network error. This usually means the request was blocked by an adblocker or your internet connection.";
+					"Network connection issue. Please try again or contact me directly at abbablessing075@gmail.com";
+				title = "Network Error";
+			} else if (error?.status === 0) {
+				detail = "No network connection. Please check your internet.";
+				title = "Offline";
+			} else if (error?.status === 400) {
+				detail = "Invalid request. Please check your email format.";
+				title = "Bad Request";
+			} else if (error?.status === 401) {
+				detail = "Authorization failed. Please contact site administrator.";
+				title = "Authorization Error";
+			} else if (error?.status === 429) {
+				detail = "Too many requests. Please try again in a few minutes.";
+				title = "Rate Limited";
+			} else if (error?.text) {
+				detail = error.text;
+			} else if (error?.message) {
+				detail = error.message;
 			}
 
-			// Show error message
 			toast({
-				title: "Failed to Send Message",
-				description: `Detail: ${detail}`,
+				title: title,
+				description: detail,
 				variant: "destructive",
 			});
 		} finally {
 			setIsSubmitting(false);
-			console.log("--- EmailJS Debug End ---");
 		}
 	};
 
@@ -147,7 +140,6 @@ export function ContactSection() {
 			className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background scroll-mt-16 sm:scroll-mt-[4.5rem] md:scroll-mt-20">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-20">
-					{/* Left - Info */}
 					<div className="order-2 lg:order-1">
 						<span className="inline-block px-3 sm:px-4 py-1 bg-primary/10 text-primary rounded-full text-xs sm:text-sm uppercase tracking-widest mb-3 sm:mb-4">
 							Contact
@@ -162,7 +154,6 @@ export function ContactSection() {
 							vision to life.
 						</p>
 
-						{/* Contact Info */}
 						<div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
 							<div className="flex items-center gap-3 sm:gap-4">
 								<div className="w-10 h-10 sm:w-12 sm:h-12 min-w-[40px] min-h-[40px] rounded-full bg-card border border-border flex items-center justify-center flex-shrink-0">
@@ -199,14 +190,19 @@ export function ContactSection() {
 							</div>
 						</div>
 
-						{/* Social Links */}
 						<div className="flex gap-2 sm:gap-3">
 							{socialLinks.map((link) => (
 								<a
 									key={link.label}
 									href={link.href}
-									className="social-icon w-10 h-10 sm:w-11 sm:h-11 min-w-[44px] min-h-[44px] touch-manipulation"
-									aria-label={link.label}>
+									className="social-icon w-10 h-10 sm:w-11 sm:h-11 min-w-[44px] min-h-[44px] touch-manipulation hover:scale-105 transition-transform duration-200"
+									aria-label={link.label}
+									target={link.href.startsWith("http") ? "_blank" : undefined}
+									rel={
+										link.href.startsWith("http")
+											? "noopener noreferrer"
+											: undefined
+									}>
 									<span className="material-icons text-lg sm:text-xl">
 										{link.icon}
 									</span>
@@ -215,17 +211,17 @@ export function ContactSection() {
 						</div>
 					</div>
 
-					{/* Right - Form */}
 					<div className="card-elevated p-5 sm:p-6 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl order-1 lg:order-2">
 						<form
 							onSubmit={handleSubmit}
-							className="space-y-4 sm:space-y-5 md:space-y-6">
+							className="space-y-4 sm:space-y-5 md:space-y-6"
+							noValidate>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
 								<div>
 									<label
 										htmlFor="name"
 										className="block text-xs sm:text-sm uppercase tracking-wider text-muted-foreground mb-2">
-										Your Name
+										Your Name *
 									</label>
 									<input
 										type="text"
@@ -237,13 +233,14 @@ export function ContactSection() {
 										placeholder="Full Name"
 										required
 										disabled={isSubmitting}
+										minLength={2}
 									/>
 								</div>
 								<div>
 									<label
 										htmlFor="email"
 										className="block text-xs sm:text-sm uppercase tracking-wider text-muted-foreground mb-2">
-										Email
+										Email *
 									</label>
 									<input
 										type="email"
@@ -274,11 +271,13 @@ export function ContactSection() {
 									required
 									disabled={isSubmitting}>
 									<option value="">Select a service</option>
-									<option value="cinematography">Cinematography</option>
-									<option value="videography">Videography</option>
-									<option value="editing">Video Editing</option>
-									<option value="social">Social Media Management</option>
-									<option value="other">Other</option>
+									<option value="Cinematography">Cinematography</option>
+									<option value="Videography">Videography</option>
+									<option value="Video Editing">Video Editing</option>
+									<option value="Social Media Management">
+										Social Media Management
+									</option>
+									<option value="Other">Other</option>
 								</select>
 							</div>
 
@@ -286,7 +285,7 @@ export function ContactSection() {
 								<label
 									htmlFor="message"
 									className="block text-xs sm:text-sm uppercase tracking-wider text-muted-foreground mb-2">
-									Message
+									Message *
 								</label>
 								<textarea
 									id="message"
@@ -298,6 +297,7 @@ export function ContactSection() {
 									placeholder="Tell me about your project..."
 									required
 									disabled={isSubmitting}
+									minLength={10}
 								/>
 							</div>
 
